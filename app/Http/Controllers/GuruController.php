@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mapel;
 use App\Models\Guru;
+use App\Models\Kelas;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class GuruController extends Controller
@@ -14,7 +17,8 @@ class GuruController extends Controller
      */
     public function index()
     {
-        //
+        $guru= Guru::all();
+        return view('guru.index', compact('guru'));
     }
 
     /**
@@ -24,7 +28,10 @@ class GuruController extends Controller
      */
     public function create()
     {
-        //
+        $kelas = Kelas::all();
+        $siswa= Siswa::all();
+        $mapel = Mapel::all();
+        return view('guru.add', compact('kelas','siswa','mapel'));
     }
 
     /**
@@ -35,7 +42,12 @@ class GuruController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama'=>'required|max:255',
+            'mapel'=>'required|max:255',
+        ]);
+        $guru = Guru::create($request->all());
+        return redirect('guru');
     }
 
     /**
@@ -55,9 +67,13 @@ class GuruController extends Controller
      * @param  \App\Models\Guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function edit(Guru $guru)
+    public function edit($id)
     {
-        //
+        $kelas = Kelas::all();
+        $siswa = Siswa::all();
+        $mapel = Mapel::all();
+        $guru = Guru::find($id);
+        return view('guru.edit', compact('siswa','kelas','guru','mapel'));
     }
 
     /**
@@ -69,7 +85,16 @@ class GuruController extends Controller
      */
     public function update(Request $request, Guru $guru)
     {
-        //
+        $validate = $request->validate([
+            'nama'=>'required|max:255',
+            'mapel'=>'required|max:255',
+        ]);
+        $guru->update([
+            'nama'=>$request->nama,
+            'mapel'=>$request->mapel
+        ]);
+        $guru = Guru::create($request->all());
+        return redirect('guru');
     }
 
     /**
@@ -80,6 +105,8 @@ class GuruController extends Controller
      */
     public function destroy(Guru $guru)
     {
-        //
+        $guru = Guru::find($id);
+        $guru->delete();
+        return redirect('guru');
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mapel;
+use App\Models\Guru;
 use App\Models\Kelas;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
@@ -14,7 +17,8 @@ class KelasController extends Controller
      */
     public function index()
     {
-        //
+        $kelas = Kelas::all();
+        return view('kelas.index', compact('kelas'));
     }
 
     /**
@@ -24,7 +28,11 @@ class KelasController extends Controller
      */
     public function create()
     {
-        //
+        $siswa = Siswa::all();
+        $kelas = Kelas::all();
+        $guru = Guru::all();
+        $mapel = Mapel::all();
+        return view('kelas.add', compact('siswa','guru','mapel'));
     }
 
     /**
@@ -35,7 +43,11 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama'=>'required|max:255',
+        ]);
+        $kelas = Kelas::create($request->all());
+        return redirect('kelas');
     }
 
     /**
@@ -55,9 +67,13 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kelas $kelas)
+    public function edit($id)
     {
-        //
+        $kelas = Kelas::all();
+        $guru = Guru::all();
+        $mapel = Mapel::all();
+        $kelas = Kelas::find($id);
+        return view('kelas.edit', compact('siswa','kelas','guru','mapel'));
     }
 
     /**
@@ -69,7 +85,14 @@ class KelasController extends Controller
      */
     public function update(Request $request, Kelas $kelas)
     {
-        //
+        $validate = $request->validate([
+            'nama'=>'required|max:255',
+        ]);
+        $kelas->update([
+            'nama'=>$request->nama,
+        ]);
+        $kelas = Kelas::create($request->all());
+        return redirect('kelas');
     }
 
     /**
@@ -78,8 +101,10 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kelas $kelas)
+    public function destroy($id)
     {
-        //
+        $kelas = Kelas::find($id);
+        $kelas->delete();
+        return redirect('kelas');
     }
 }

@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('siswa', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('kelas');
+            $table->string('mapel');
             $table->timestamps();
         });
     }

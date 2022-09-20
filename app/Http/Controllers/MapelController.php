@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\mapel;
+use App\Models\Mapel;
+use App\Models\Guru;
+use App\Models\Kelas;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class MapelController extends Controller
@@ -14,7 +17,8 @@ class MapelController extends Controller
      */
     public function index()
     {
-        //
+        $mapel = Mapel::all();
+        return view('mapel.index', compact('mapel'));
     }
 
     /**
@@ -24,7 +28,10 @@ class MapelController extends Controller
      */
     public function create()
     {
-        //
+        $kelas = Kelas::all();
+        $guru = Guru::all();
+        $mapel = Mapel::all();
+        return view('kelas.add', compact('siswa','guru','mapel'));
     }
 
     /**
@@ -35,7 +42,12 @@ class MapelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama'=>'required|max:255',
+            'guru'=>'required|max:255'
+        ]);
+        $mapel = Mapel::create($request->all());
+        return redirect('mapel');
     }
 
     /**
@@ -55,9 +67,13 @@ class MapelController extends Controller
      * @param  \App\Models\mapel  $mapel
      * @return \Illuminate\Http\Response
      */
-    public function edit(mapel $mapel)
+    public function edit($id)
     {
-        //
+        $kelas = Kelas::all();
+        $guru = Guru::all();
+        $siswa = Siswa::all();
+        $mapel = Mapel::find($id);
+        return view('mapel.edit', compact('siswa','kelas','guru','mapel'));
     }
 
     /**
@@ -69,7 +85,16 @@ class MapelController extends Controller
      */
     public function update(Request $request, mapel $mapel)
     {
-        //
+        $validate = $request->validate([
+            'nama'=>'required|max:255',
+            'guru'=>'required|max:255'
+        ]);
+        $mapel->update([
+            'nama'=>$request->nama,
+            'guru'=>$request->guru
+        ]);
+        $mapel = Mapel::create($request->all());
+        return redirect('mapel');
     }
 
     /**
@@ -80,6 +105,8 @@ class MapelController extends Controller
      */
     public function destroy(mapel $mapel)
     {
-        //
+        $mapel = Mapel::find($id);
+        $mapel->delete();
+        return redirect('mapel');
     }
 }

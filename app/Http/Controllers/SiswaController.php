@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mapel;
+use App\Models\Guru;
+use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 
@@ -14,7 +17,8 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        //
+        $siswa = Siswa::all();
+        return view('siswa.index', compact('siswa'));
     }
 
     /**
@@ -24,7 +28,10 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        //
+        $kelas = Kelas::all();
+        $guru = Guru::all();
+        $mapel = Mapel::all();
+        return view('siswa.add', compact('kelas','guru','mapel'));
     }
 
     /**
@@ -35,7 +42,13 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama'=>'required|max:255',
+            'kelas'=>'required',
+            'mapel'=>'required'
+        ]);
+        $siswa = Siswa::create($request->all());
+        return redirect('siswa');
     }
 
     /**
@@ -55,9 +68,13 @@ class SiswaController extends Controller
      * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Siswa $siswa)
+    public function edit($id)
     {
-        //
+        $kelas = Kelas::all();
+        $guru = Guru::all();
+        $mapel = Mapel::all();
+        $siswa = Siswa::find($id);
+        return view('siswa.edit', compact('siswa','kelas','guru','mapel'));
     }
 
     /**
@@ -69,7 +86,18 @@ class SiswaController extends Controller
      */
     public function update(Request $request, Siswa $siswa)
     {
-        //
+        $validate = $request->validate([
+            'nama'=>'required|max:255',
+            'kelas'=>'required|max:255',
+            'mapel'=>'required|max:255',
+        ]);
+        $siswa->update([
+            'nama'=>$request->nama,
+            'kelas'=>$request->kelas,
+            'mapel'=>$request->mapel
+        ]);
+        $siswa = Siswa::create($request->all());
+        return redirect('siswa');
     }
 
     /**
@@ -78,8 +106,10 @@ class SiswaController extends Controller
      * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Siswa $siswa)
+    public function destroy($id)
     {
-        //
+        $siswa = Siswa::find($id);
+        $siswa->delete();
+        return redirect('siswa');
     }
 }
