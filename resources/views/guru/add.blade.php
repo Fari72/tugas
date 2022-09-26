@@ -7,7 +7,7 @@
 @section('content')
     <div class="card mt-3">
         <div class="card-title">
-            <h3>Data Guru</h3>
+            <h3>Tambah Guru</h3>
         </div>
     </div>
 
@@ -16,35 +16,35 @@
             @csrf
 
             <div class="row">
-            <div class="col-log-6">
-                <div class="form-goup">
-                    <label for="nama">Nama guru</label>
-                    <input type="text" name="nama" class="form-control" value="{{old(nama)}}" @error('nama')
-                    is invalid @enderror>
-                    @error('nama')
-                    <div class="text-danger">
-                        {{$message}}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-            
-            <div class="col-log-6">
-                <div class="form-goup">
-                    <label for="mapel">Mapel</label>
-                    <select type="text" name="mapel" class="form-control" value="{{old(mapel)}}" @error('mapel')
+                <div class="col-log-6">
+                    <div class="form-goup">
+                        <label for="nama">Nama guru</label>
+                        <input type="text" name="nama" class="form-control" value="" @error('nama')
                         is invalid @enderror>
+                        @error('nama')
+                        <div class="text-danger">
+                            {{$message}}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div class="col-log-6">
+                    <div class="form-goup">
+                        <label for="mapel">Mapel</label>
+                        <select type="text" name="mapel" class="form-control" value="" @error('mapel')
+                            is invalid @enderror>
                         @error('mapel')
                         <div class="text-danger">
                             {{$message}}
                         </div>
                         @enderror
                         @foreach ($mapel as $item)
-                    <option value="{{$item->id}}">{{$item->nama}}</option>
-                    </select>
-                    @endforeach
+                        <option value="{{$item->id}}">{{$item->nama}}</option>
+                        </select>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="modal-footer">
                 <a href="/guru" class="btn btn-secondary" role="button">Batal</a>

@@ -103,7 +103,7 @@ class GuruController extends Controller
      * @param  \App\Models\Guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Guru $guru)
+    public function destroy($id)
     {
         $guru = Guru::find($id);
         $guru->delete();

@@ -7,7 +7,7 @@
 @section('content')
     <div class="card mt-3">
         <div class="card-title">
-            <h3>Data Mapel</h3>
+            <h3>Tambah Mapel</h3>
         </div>
     </div>
 
@@ -19,7 +19,7 @@
             <div class="col-log-6">
                 <div class="form-goup">
                     <label for="nama">Nama Mapel</label>
-                    <input type="text" name="nama" class="form-control" value="{{old(nama)}}" @error('nama')
+                    <input type="text" name="nama" class="form-control" value="" @error('nama')
                     is invalid @enderror>
                     @error('nama')
                     <div class="text-danger">
@@ -32,7 +32,7 @@
             <div class="col-log-6">
                 <div class="form-goup">
                     <label for="guru">guru</label>
-                    <input type="text" name="guru" class="form-control" value="{{old(guru)}}" @error('guru')
+                    <input type="text" name="guru" class="form-control" value="" @error('guru')
                         is invalid @enderror>
                         @error('guru')
                         <div class="text-danger">

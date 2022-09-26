@@ -28,10 +28,10 @@ class MapelController extends Controller
      */
     public function create()
     {
-        $kelas = Kelas::all();
         $guru = Guru::all();
         $mapel = Mapel::all();
-        return view('kelas.add', compact('siswa','guru','mapel'));
+        $kelas = Kelas::all();
+        return view('mapel.add', compact('guru','kelas'));
     }
 
     /**
@@ -103,7 +103,7 @@ class MapelController extends Controller
      * @param  \App\Models\mapel  $mapel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(mapel $mapel)
+    public function destroy($id)
     {
         $mapel = Mapel::find($id);
         $mapel->delete();
